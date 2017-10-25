@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 
 require("./routes/htmlroutes")(app);
 require("./routes/apiroutes")(app);
-var data = require("/data/data.js");
-var wait = require("/data/")
+var data = require("./data/data.js");
+var wait = require("./data/waitlist.js")
 
 app.listen(PORT, function(){ 
   console.log("App is listening on PORT" + PORT);
