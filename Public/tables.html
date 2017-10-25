@@ -26,7 +26,7 @@
       <h3>Current Reservation and Waiting List</h3>
       <br>
       <a href="/reserve"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-folder-close"></span> Make Reservation</button></a>
-      <a href="/home"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span> </button></a>
+      <a href="/"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-home"></span> </button></a>
     </div> 
   </div>
 
@@ -38,7 +38,7 @@
                             Current Reservations
                         </div>
 
-                        <div class="panel-body" id="headlines"> 
+                        <div class="panel-body" id="tableSection"> 
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                             Waiting List
                         </div>
 
-                        <div class="panel-body" id="headlines"> 
+                        <div class="panel-body" id="waitlistSection"> 
                         </div>
                     </div>
                 </div>
@@ -65,11 +65,11 @@
   <footer class="footer">
     <div class="container">
       <p>
-        <a href="#">Clear Table</a>
+        <a href="#" id="clear">Clear Table</a>
       | 
-        <a href="#">API Table Link</a>
+        <a href="/api/tables">API Table Link</a>
       |
-        <a href="#">API Wait List</a>
+        <a href="/api/waitlist">API Wait List</a>
       </p>
       
     </div> 
@@ -82,9 +82,72 @@
     var presentUrl = window.location.origin;
 
     $.ajax({
-      url: presentUrl
+      url: presentUrl + "/api/tables", method: "GET"
     })
+    .done(function(tableData) {
+
+      console.log(tableData);
+
+      for (var i = 0; i < tableData.length; i++) {
+
+        var tableSection = $("<div>");
+        tableSection.addClass("well");
+        tableSection.attr("id", "tableWell-" + i + 1);
+        $("#tableSection").append(tableSection);
+
+        var tableNumber = i + 1;
+
+        $("#tableWell-" + i + 1).append("<h2><span class = 'label label-primary'>" + tableNumber + "</span> | " + tableData[i].customerID + "</h2>");
+      }
+    });
   }
+
+
+  function waitList() {
+      var presentUrl = window.location.origin;
+
+      $.ajax({
+        url: presentUrl + "/api/waitlist", method: "GET"
+      })
+      .done(function(waitlistData) {
+
+        console.log(waitlistData);
+
+        for (var i = 0; i < waitlistData.length; i++) {
+
+          var waitlistSection = $("<div>");
+          waitlistSection.addClass("well");
+          waitlistSection.attr("id", "waitlistWell-" + i + 1);
+          $("#waitlistSection").append(waitlistSection);
+
+          var tableNumber = i + 1;
+
+          $("#waitlistWell-" + i + 1).append("<h2><span class = 'label label-primary'>" + tableNumber + "</span> | " + waitlistData[i].customerID + "</h2>");
+        }
+      });     
+  }
+
+  function clear() {
+
+      var presentUrl = window.location.origin;
+      console.log(presentUrl)  
+      $.ajax({
+        url: presentUrl + "/api/clear", method: "POST"
+      });  
+  }
+
+  $("#clear").on("click", function() {
+    alert("clearing....");
+    clear();
+
+    location.reload();
+  });
+
+
+  runTable();
+  waitList();
+
+
 
 
 </script>
