@@ -7,4 +7,4 @@ var reservations = [
   }
 ];
 
-module.exports = reservation;
+module.exports = reservations;
