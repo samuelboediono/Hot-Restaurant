@@ -1,7 +1,8 @@
 module.exports = function(app){
   
   app.get("/api/tables", function(req, res){
-    return res.json(reservations);
+   var data = require("../data/data.js");
+    return res.json(data);
   })
 
   app.post("/api/reserve", function(req, res){
