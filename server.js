@@ -11,20 +11,9 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 require("./routes/htmlroutes")(app);
-// require("./routes/apiroutes")(app);
-var data = require("./data/data.js");
-
-app.get("/reserve", function(req, res){
-
-  var newreservation = req.body
-  console.log(newreservation);
-
-  reservations.push(newreservation);
-  res.json(newreservation);
-
-})
-
-
+require("./routes/apiroutes")(app);
+var data = require("/data/data.js");
+var wait = require("/data/")
 
 app.listen(PORT, function(){ 
   console.log("App is listening on PORT" + PORT);
